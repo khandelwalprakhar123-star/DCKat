@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8" /><style>html,body{margin:0;background:transparent}</style></head>
+  <body>
+    <canvas id="icon" width="1024" height="1024"></canvas>
+    <script src="../src/renderer/art/cat.js"></script>
+    <script>
+      var art = window.CatArt;
+      var D = art.DESIGN;
+      var S = 1024;
+      var c = document.getElementById('icon');
+      var ctx = c.getContext('2d');
+
+      // macOS squircle-ish plate: rounded rect at ~22% radius with a warm sky
+      // behind her, so she reads at 32px in a Finder list as well as 512px.
+      var inset = 52;
+      var size = S - inset * 2;
+      var r = size * 0.2237;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.roundRect(inset, inset, size, size, r);
+      ctx.clip();
+
+      // Teal plate: complementary to her orange, so she separates cleanly even
+      // at 32px where a warm background would let her melt into it.
+      var g = ctx.createLinearGradient(0, inset, 0, inset + size);
+      g.addColorStop(0, '#8fd3cd');
+      g.addColorStop(0.55, '#5fb3ae');
+      g.addColorStop(1, '#3d8f8c');
+      ctx.fillStyle = g;
+      ctx.fillRect(inset, inset, size, size);
+
+      // Soft ground so she isn't floating in the plate.
+      ctx.fillStyle = 'rgba(18,60,58,0.16)';
+      ctx.beginPath();
+      ctx.ellipse(S / 2, inset + size * 0.86, size * 0.40, size * 0.055, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      var scale = (size * 0.74) / D.h;
+      ctx.translate(S / 2 - (D.w / 2) * scale, inset + size * 0.875 - D.floor * scale);
+      ctx.scale(scale, scale);
+      art.draw(ctx, { mode: 'sit', phase: 0.25, eye: 'open', look: { x: 0, y: 0 } });
+      ctx.restore();
+
+      window.__icon = c.toDataURL('image/png');
+    </script>
+  </body>
+</html>

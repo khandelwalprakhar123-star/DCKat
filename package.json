@@ -1,0 +1,19 @@
+{
+  "name": "pet",
+  "version": "1.0.0",
+  "description": "An illustrated tabby that lives on your desktop",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "preview": "electron tools/preview.js",
+    "build:app": "bash Scripts/build_app.sh",
+    "icon": "electron tools/icon.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^43.2.0"
+  }
+}

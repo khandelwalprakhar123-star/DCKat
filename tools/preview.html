@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8" /><style>html,body{margin:0;background:#4a4a52}</style></head>
+  <body>
+    <canvas id="sheet"></canvas>
+    <script src="../src/renderer/art/cat.js"></script>
+    <script>
+      var art = window.CatArt;
+      var D = art.DESIGN;
+      var FRAMES = [
+        { mode: 'walk', phase: 0.0 },
+        { mode: 'walk', phase: 0.25 },
+        { mode: 'walk', phase: 0.5 },
+        { mode: 'walk', phase: 0.75 },
+        { mode: 'stand', phase: 0.2 },
+        { mode: 'stand', phase: 0.2, eye: 'closed' },
+        { mode: 'stand', phase: 0.2, eye: 'wide', ear: 1 },
+        { mode: 'stand', phase: 0.2, look: { x: -1, y: 0.6 } },
+        { mode: 'sit', phase: 0.2 },
+        { mode: 'sit', phase: 0.2, eye: 'half' },
+        { mode: 'groom', phase: 0.3 },
+        { mode: 'groom', phase: 0.8 },
+        { mode: 'loaf', phase: 0.2 },
+        { mode: 'curl', phase: 0.3, eye: 'closed', ear: 0.6 },
+        { mode: 'stretch', phase: 0.5 },
+        { mode: 'fall', phase: 0.3, eye: 'wide', ear: 0.9 }
+      ];
+
+      var COLS = 4, S = 1.15, PAD = 8;
+      var cw = D.w * S + PAD * 2, ch = D.h * S + PAD * 2;
+      var rows = Math.ceil(FRAMES.length / COLS);
+      var c = document.getElementById('sheet');
+      var dpr = 2;
+      c.width = cw * COLS * dpr;
+      c.height = ch * rows * dpr;
+      var ctx = c.getContext('2d');
+      ctx.scale(dpr, dpr);
+
+      FRAMES.forEach(function (f, i) {
+        var ox = (i % COLS) * cw, oy = Math.floor(i / COLS) * ch;
+        ctx.fillStyle = (i % 2) ? '#50505a' : '#464650';
+        ctx.fillRect(ox, oy, cw, ch);
+        ctx.strokeStyle = 'rgba(255,80,80,0.55)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(ox, oy + PAD + D.floor * S);
+        ctx.lineTo(ox + cw, oy + PAD + D.floor * S);
+        ctx.stroke();
+        ctx.save();
+        ctx.translate(ox + PAD, oy + PAD);
+        ctx.scale(S, S);
+        art.draw(ctx, f);
+        ctx.restore();
+      });
+
+      window.__sheet = c.toDataURL('image/png');
+    </script>
+  </body>
+</html>

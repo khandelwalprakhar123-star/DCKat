@@ -1,7 +1,7 @@
 # Digital Pet
 
-An illustrated cat that lives on your macOS desktop, chain-smoking and insulting
-you. She wanders along the top of the Dock, naps, grooms, watches your cursor,
+An illustrated cat that lives on your macOS desktop, chain-smoking and is always unimpressed by
+you. She really is a digital representation of an orange cat if she was a sailor. She wanders along the top of the Dock, naps, grooms, watches your cursor,
 and can be picked up and thrown. Her body stays in profile while her face turns
 toward you. If Ollama is running, she talks back — with a local model, so
 nothing leaves your machine.
